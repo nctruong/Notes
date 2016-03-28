@@ -1,0 +1,12 @@
+update chdrpf set avlisu='' where chdrnum='35002407'
+-------------------------------------PASS TEST-------------------------------------
+UPDATE CHDR SET SERVUNIT='FG' WHERE CHDRNUM='35000919' /* Prop/pol not on file */
+-------------------------------------CLAIM-------------------------------------
+SELECT * FROM gcmh /* CLAIM */
+	GCSTS:	Claim Status
+-------------------------------------PROD/PLAN---------------------------------	
+Product Plan: BNFH - BNFHPF - Benefit Header, must have the contract.
+how ?
+	Benefit Definition -> Sr9rp - Work with Benefits NewBusines
+		PR9RP.bnfhIO.setFunction(varcom.writr);
+	Note that new records are only saved if the transaction was completed. It means getting back the first screen with completed message.

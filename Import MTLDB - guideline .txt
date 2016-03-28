@@ -1,0 +1,59 @@
+--Step0
+Install "OracleXE112_Win64". Then it auto create XE instance
+
+--Step1
+Use sqldeveloper to connect XE instance by system account then execute SQL below to check location for data stored
+
+select * from dba_data_files where tablespace_name = 'SYSTEM';
+
+==> Example: C:\ORACLEXE\APP\ORACLE\ORADATA\XE\SYSTEM.DBF
+
+--Step2
+Replace the found path for below SQLs then execute them in sqldeveloper
+
+create tablespace VM1DTA_INDX datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\vm1dta_indx01.dbf' size 1000 m autoextend on;
+create tablespace QUIPOZ_DATA datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\quipoz_data01.dbf' size  100 m autoextend on;
+create tablespace VM1EXC_DATA datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\vm1exc_data01.dbf' size 100 m autoextend on;
+create tablespace VM1COM_DATA datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\vm1com_data01.dbf' size 100 m autoextend on;
+create tablespace PAXUS_DATA datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\paxus_data01.dbf' size 100 m autoextend on;
+create tablespace CSCSORT_DATA datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\cscsort_data01.dbf' size 100 m autoextend on;
+create tablespace VM1DTA_DATA datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\vm1dta_data01.dbf' size 8000 m autoextend on;
+create tablespace sess_data datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\sess_data01.dbf' size 100 m autoextend on;
+alter tablespace SYSTEM add datafile 'C:\ORACLEXE\APP\ORACLE\ORADATA\XE\system.data2.dbf' size 1000m autoextend on maxsize unlimited;
+commit; 
+
+--Step3
+Use below SQL to check any "dumpdir" exist
+SELECT * FROM dba_directories;
+
+Use below SQL to create "dumpdir"
+CREATE OR REPLACE  directory dumpdir as 'c:\oraclexe\dumpdir';
+commit;
+
+*** use Windows Explorer to create c:\oraclexe\dumpdir above.
+
+--Step4
+Copy dumpfile to "dumpdir"
+
+--Step5
+Execute SQL below to create role
+create role vm1dta_read;
+commit;
+
+create role vm1read;
+commit;
+
+--Step6 import database at 
+Run below command at CMD to import database. But check 4 parameters:
+a) user/password@sid. Example system/Gu0ma0@XE  
+b) DIRECTORY=dumpdir 
+c) DUMPFILE=ILUAT-BACKUP-PROD_20150805_0712.dmp
+d) logfile=ILUAT-BACKUP-PROD_20150805_0712_import.log
+
+--run this command after update the right thing
+impdp system/Gu0ma0@XE DIRECTORY=dumpdir DUMPFILE=ILUAT-BACKUP-PROD_20150805_0712.dmp SCHEMAS=vm1dta,PAXUS,VM1COM,VM1EXC,QUIPOZ,SESS,CSCSORT logfile=ILUAT-BACKUP-PROD_20150805_0712_import.log
+
+impdp system/<oracle_password> DIRECTORY=dumpdir DUMPFILE=ILUAT-BACKUP-PROD_20150805_0712.dmp SCHEMAS=vm1dta,PAXUS,VM1COM,VM1EXC,QUIPOZ,SESS,CSCSORT logfile=ILUAT-BACKUP-PROD_20150805_0712_import.log
+
+--Step6
+ALTER USER VM1DTA IDENTIFIED BY vm1dta12#$;

@@ -1,0 +1,25 @@
+-DQuipoz.CSCGroupAsiaWeb.XMLPath="D:\01.Integral\01.SourceCode\03.R16.1\Group\CSCGroupAsiaApp\src\main\resources\QuipozCfg.xml"
+For Life:
+-DQuipoz.LifeAsiaWeb.XMLPath=" Your QuipozCfg.xml absolute path"
+For P&C:
+-DQuipoz.PolisyAsiaWeb.XMLPath="Your QuipozCfg.xml absolute path"
+
+D:\01.Integral\01.SourceCode\02.Trunk\Group\CSCGroupAsiaApp\src\main\resources\QuipozCfg.xml
+---------------------------------------------------------------------------------------------
+“SJNKI_Discovery”: http://20.194.56.52/repos/integral/BASE/Branches/Temp/SJNKI-discovery/
+http://20.194.56.52/repos/integral/BASE/Branches/Temp/CC_Version/Integral7.7-R16.1/
+Database for R16.1 have been restored to local database server as information below:
+IP: 20.203.133.167
+SID: INT77DB_R161
+Username: int-dba
+Password: vm1dta12#$
+---------------------------------------------------------------------------------------------
+select ITEMITEM, ITEMTABL, CONVERT(varchar(500),GENAREA) 
+from VM1DTA.ITEMPF 
+WHERE ITEMTABL ='T1691'
+---------------------------------------------------------------------------------------------
+http://cscdbnoi017:9222/CSCGroupAsiaWeb
+ssingh442 - ssingh442
+---------------------------------------------------------------------------------------------
+RESTORE DATABASE INT77DB2014_15_Nam
+FROM DATABASE_SNAPSHOT='INT77DB2014_15_Nam_BK';
