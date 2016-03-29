@@ -1,4 +1,4 @@
-update chdrpf set avlisu='' where chdrnum='35002407'
+delete from slck
 -------------------------------------PASS TEST-------------------------------------
 UPDATE CHDR SET SERVUNIT='FG' WHERE CHDRNUM='35000919' /* Prop/pol not on file */
 -------------------------------------CLAIM-------------------------------------
@@ -10,3 +10,16 @@ how ?
 	Benefit Definition -> Sr9rp - Work with Benefits NewBusines
 		PR9RP.bnfhIO.setFunction(varcom.writr);
 	Note that new records are only saved if the transaction was completed. It means getting back the first screen with completed message.
+	Adding Premium Type to pass Incomplete Prod/Plan
+-------------------------------------------------------------------------------
+select * from clts where CLTTYPE='P'
+-------------------------------------------------------------------------------
+UPDATE CHDRPF SET AVLISU='' WHERE CHDRNUM='35002293' --RG51 - Previous G3xISSUE active 
+select * from clts where CLTTYPE='P'
+BENEFIT: select * from bnfh  where CHDRNUM='35002422'
+-------------------------------------ISSUE---------------------------------	
+--01. Contract must be existed in this LF (SERVUNIT='GP')
+	select * from gchd where CHDRNUM='35002293' --Common contract header
+	If not -> UPDATE CHDR SET SERVUNIT='GP' WHERE CHDRNUM='35002293' - BOM 
+--02. If contract has been already issued.
+	UPDATE CHDRPF SET AVLISU='' WHERE CHDRNUM='35002293' --RG51 - Previous G3xISSUE active 
